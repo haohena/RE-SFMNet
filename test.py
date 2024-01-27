@@ -33,35 +33,23 @@ def eval_model(model, dataset, name, epoch, args):
     val_ssim_dic = 0
     val_lpips_dic = 0
     val_niqe_dic = 0
-    os.makedirs(os.path.join(args.save_path, args.writer_name, 'result-{}'.format(name)), exist_ok=True)#writer就是帮助建个文件夹的？
+    os.makedirs(os.path.join(args.save_path, args.writer_name, 'result-{}'.format(name)), exist_ok=True)
     timer_test = util.timer()
     for batch, data in enumerate(dataset):
-        #print('batch:',batch,"data:",data)  #lr_up  img_gt   img_name
-        #with torch.no_grad():
 
         sr = model(to_device(data, device))
-        #sr   img_out   img_fre
-        #print("sr size:",sr['img_out'].shape,sr['img_fre'].shape)
-        psnr_c, ssim_c = psnr_ssim(data['img_gt'], sr['img_out'])#弄反了吧
-        # lpips_c, niqe_c = lpips_niqe(sr['img_out'],data['img_gt'])
+
+        psnr_c, ssim_c = psnr_ssim(data['img_gt'], sr['img_out'])
         val_psnr_dic = val_psnr_dic + psnr_c
         val_ssim_dic = val_ssim_dic + ssim_c
-        # val_lpips_dic = val_lpips_dic + lpips_c
-        # val_niqe_dic = val_niqe_dic + niqe_c
+
         torchvision.utils.save_image(sr['img_out'][0],
                                      os.path.join(args.save_path, args.writer_name, 'result-{}'.format(name),
-                                                  '{}'.format(str(data['img_name'][0]))))#保存到文件夹 ./experiment/mynet/定义的save name/图片
-        # print(str(data['img_name'][0]))
-        # if str(data['img_name'][0]) == "201302":
-        #     print('find it')
-        #     torchvision.utils.save_image(sr['img_fre'][0],
-        #                                  os.path.join(args.save_path, args.writer_name, 'result-{}'.format("name"),
-        #                                               '{}'.format(str('answer'))))
+                                                  '{}'.format(str(data['img_name'][0]))))
+
 
     print("Epoch：{}, {}, psnr: {:.3f}".format(epoch+1, name, val_psnr_dic/(len(dataset))))#out（局部空间）分支和fre分支
     print("Epoch：{}, {}, ssim: {:.3f}".format(epoch + 1, name, val_ssim_dic / (len(dataset))))
-    # print("Epoch：{}, {}, lpips: {:.3f}".format(epoch + 1, name, val_lpips_dic / (len(dataset))))
-    # print("Epoch：{}, {}, niqe: {:.3f}".format(epoch + 1, name, val_niqe_dic / (len(dataset))))
 
     print('Forward: {:.2f}s\n'.format(timer_test.toc()))
 
