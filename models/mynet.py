@@ -10,17 +10,17 @@ class TwoBranch(nn.Module):
         self.args = args
 
         modules_head_fre = [common.ConvBNReLU2D(args.num_channels, out_channels=args.num_features,
-                                            kernel_size=3, padding=1, act=args.act)]#可选的norm和激活
-        self.head_fre = nn.Sequential(*modules_head_fre)#python 包裹传参方法 可接受不确定数目参数 一个*传入数组 **传入字典
+                                            kernel_size=3, padding=1, act=args.act)]
+        self.head_fre = nn.Sequential(*modules_head_fre)
 
-        modules_down1_fre = [common.DownSample(args.num_features, False, False),#pixel shuffle的卷积
-                             common.FreBlock9(args.num_features, imgsize=imgsize[1]) #频率分支计算  FRB分支模块
+        modules_down1_fre = [common.DownSample(args.num_features, False, False),
+                             common.FreBlock9(args.num_features, imgsize=imgsize[1])
                          ]
 
         self.down1_fre = nn.Sequential(*modules_down1_fre)
         self.down1_fre_mo = nn.Sequential(
                                           common.InvertedResidual(args.num_features, args.num_features),
-                                          common.FreBlock9(args.num_features,imgsize=int(imgsize[1]))  #加大卷积
+                                          common.FreBlock9(args.num_features,imgsize=int(imgsize[1]))
                                           )
 
 
@@ -187,7 +187,7 @@ class TwoBranch(nn.Module):
 
         conv_fuse = []
         for i in range(14):
-            conv_fuse.append(common.FuseBlock7(args.num_features))  #FSIB 每个组件注意都要用 residual
+            conv_fuse.append(common.FuseBlock7(args.num_features))  #FSIB
 
         self.conv_fuse = nn.Sequential(*conv_fuse)
 
