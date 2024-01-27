@@ -37,7 +37,7 @@ class Data(data.Dataset):
         print(self.imgs_LR_path, self.imgs_HR_path)
 
 
-    def __getitem__(self, item): #将对象做成数组  item为对象数组下标
+    def __getitem__(self, item): 
 
         img_path_LR = self.imgs_LR[item]
         img_path_HR = self.imgs_HR[item]
