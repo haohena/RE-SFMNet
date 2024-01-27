@@ -50,11 +50,10 @@ def rgb2ycbcr(img, only_y=True):
     return rlt.astype(in_img_type)
 
 def psnr_ssim(img_pred, img_gt):
-    #print('img pre   img gt',img_pred.shape,img_gt.shape)
     img_gt = tensor2img(img_gt)
     img_pred = tensor2img(img_pred)
 
-    img_pred, img_gt = img_pred[:, 8: -8, 8:-8, :], img_gt[:, 8: -8, 8:-8, :]  #psnr 帮助排除边缘地区
+    img_pred, img_gt = img_pred[:, 8: -8, 8:-8, :], img_gt[:, 8: -8, 8:-8, :]
 
     sum_psnr = []
     sum_ssim = []
@@ -67,18 +66,5 @@ def lpips_niqe(img_pred,img_gt):
     device = torch.device("cuda:3" if torch.cuda.is_available() else "cpu")
     lpips_model.to(device)
     lpips_distance = lpips_model(img_pred, img_gt)
-    #print("LPIPS distance:", lpips_distance.item())
 
-    # preprocess = transforms.Compose([
-    #     transforms.ToPILImage(),
-    #     transforms.Grayscale(),
-    #     transforms.Resize((96, 96)),
-    #     transforms.ToTensor()
-    # ])
-    # gray_tensor = preprocess(img_pred.squeeze(0))
-    # niqe_input = gray_tensor.numpy()
-    # niqe_score1 = niqe.niqe(niqe_input)
-    #
-    #
-    # print("niqe_score:", niqe_score1)
-    return lpips_distance,0
+    return lpips_distance
