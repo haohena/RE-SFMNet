@@ -4,9 +4,9 @@ Our experimental code will be published later！
 
 # Visual quality comparison
 ## Visual quality comparison on CelebA dataset by the scale of ×8
-![image](https://github.com/haohena/RE-SFMNet/assets/64673962/c67166ec-26be-44e4-9e6b-a1499d6e64f5)
+![celeba compare](https://github.com/haohena/RE-SFMNet/assets/64673962/e35e3a60-8e24-4217-9483-8716831526a7)
 ## Visual quality comparison on Helen dataset by the scale of ×8
-![对比helen](https://github.com/haohena/RE-SFMNet/assets/64673962/96c12d8f-d3a5-4306-a145-930e3062448b)
+![helen compare](https://github.com/haohena/RE-SFMNet/assets/64673962/7415aa51-4e74-4691-8878-00ea3b2b9d8c)
 # Requirement
 # Train
 # Test
